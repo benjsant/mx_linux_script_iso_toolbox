@@ -1,0 +1,23 @@
+#!/bin/bash
+
+apt update -y && apt upgrade -y 
+
+while read line 
+  do
+  apt_pack+=" "$line
+  done< txt/apt.txt
+
+apt install ${apt_pack} -y
+
+while read line 
+  do
+  remove_pack+=" "$line
+  done< txt/remove.txt
+
+apt remove ${remove_pack} -y
+
+apt update -y
+
+apt autoremove -y
+
+apt install -f 

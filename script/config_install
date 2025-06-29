@@ -1,0 +1,46 @@
+#!/bin/bash
+
+util=$(getent passwd "1000"|cut -d: -f1)
+
+FILE="/etc/lightdm/lightdm.conf"
+
+systemctl mask suspend.target hibernate.target
+
+#modif /etc/environment 
+rm /etc/environment 
+
+chown root:root config/environment
+chmod 644 config/environment
+mv config/environment /etc/environment
+
+#modif /etc/sudoers
+rm /etc/sudoers
+
+chown root:root config/sudoers
+chmod 440 config/sudoers
+mv config/sudoers /etc/sudoers
+
+# Lightdm Autologin 
+
+sed -i '/^autologin-user=/d' "$FILE"
+sed -i '/^autologin-user-timeout=/d' "$FILE"
+sed -i '/^autologin-session=/d' "$FILE"
+
+sed -i "/^\[Seat:\*\]/a autologin-user=$util\nautologin-user-timeout=0\nautologin-session=lightdm-autologin" "$FILE"
+
+#Add policyKit (polkit) rules, allowing to use gtk root application without password
+chown root:root config/disable-passwords.rules
+chmod 644 config/disable-passwords.rules
+mv config/disable-passwords.rules /etc/polkit-1/rules.d/disable-passwords.rules
+
+
+mkdir -p /home/snapshot/{work,snapshots}
+
+#Cleaning packages 
+apt autoclean
+apt clean
+apt autoremove -y 
+apt purge ~c -y 
+
+
+

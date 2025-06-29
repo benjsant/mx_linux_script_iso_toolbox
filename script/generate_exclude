@@ -1,0 +1,158 @@
+#!/bin/bash
+
+# Nom de l’utilisateur à cloner (ou utilisateur courant)
+USER_NAME="${1:-$USER}"
+
+# Répertoires de travail
+BASE_DIR="/home/$USER_NAME/mxsnapshot"
+EXCLUDE_FILE="$BASE_DIR/exclude-$USER_NAME.list"
+CONF_FILE="$BASE_DIR/mx-snapshot-$USER_NAME.conf"
+
+mkdir -p "$BASE_DIR"
+
+echo "🔧 Génération des fichiers de configuration MX Snapshot pour : $USER_NAME"
+echo "📂 Dossier cible : $BASE_DIR"
+
+# --- Génération exclude.list personnalisé ---
+cat > "$EXCLUDE_FILE" <<EOF
+# Exclusions système de base
+/proc
+/sys
+/dev
+/run
+/mnt
+/media
+/lost+found
+/tmp
+tmp
+tmpdir
+cdrom/*
+swapfile
+live
+home/snapshot
+home/timeshift/snapshots
+timeshift/snapshots
+
+# Boot/system
+boot/grub/!(themes|unicode.pf2)
+etc/adjtime
+etc/blkid.tab.old
+etc/defaultdomain
+etc/crypttab
+etc/fstab.backup
+etc/ioctl.save
+etc/live/protect
+etc/machine-id
+etc/mailname
+etc/mtab
+etc/udev/rules.d/70-persistent-cd.rules
+etc/udev/rules.d/70-persistent-net.rules
+etc/resolv.conf
+etc/X11/xorg.conf
+etc/X11/xorg.conf.d/20-nvidia.conf
+etc/X11/xorg.conf.d/20-intel.conf
+etc/X11/xorg.conf.d/20-radeon.conf
+etc/X11/xorg.conf.d/20-amd.conf
+
+# Root
+root/.bash_history
+root/.cache
+root/.local/share/mc/history
+root/.local/share/recently-used.xbel
+root/.dbus
+root/.gconf
+root/.gnome2
+root/.lesshst
+root/.Trash*
+root/.sudo_as_admin_successful
+root/keyfile
+
+# Logs et cache
+var/cache/apt/archives/*.deb
+var/cache/apt/archives/partial/*
+var/cache/apt-xapian-index/index.*
+var/cache/apt-show-versions/*
+var/cache/apt/*.bin
+var/cache/apt/apt-file/*
+var/cache/debconf/*-old
+var/cache/lightdm
+var/cache/samba/browse.dat
+var/lib/apt/lists/*
+var/lib/apt/periodic/*
+var/lib/dbus/machine-id
+var/lib/dhcp/*
+var/lib/dpkg/*-old
+var/lib/lightdm/.cache
+var/lib/lightdm/.Xauthority
+var/lib/NetworkManager/*
+var/lib/nfs/rpc_pipefs/*
+var/lib/sddm/*
+var/lib/sudo/*
+var/lib/udisks/*
+var/lib/urandom/*
+var/log/!(apache2|clamav|libvirt|journal|samba)
+var/log/clamav/*
+var/log/journal/*
+var/log/samba/*
+var/mail/*
+var/spool/mail/*
+var/spool/anacron/*
+var/tmp/*
+var/cache/brightness-settings-cache/*
+
+# Fichiers utilisateur $USER_NAME à exclure
+home/$USER_NAME/.bash_history
+home/$USER_NAME/.lesshst
+home/$USER_NAME/.recently-used
+home/$USER_NAME/.recently-used.xbel
+home/$USER_NAME/.local/share/recently-used.xbel
+home/$USER_NAME/.local/share/mc/history
+home/$USER_NAME/.xsession-errors*
+home/$USER_NAME/.Trash*
+home/$USER_NAME/.local/share/Trash/*
+home/$USER_NAME/.sudo_as_admin_successful
+home/$USER_NAME/.cache/thumbnails/*
+home/$USER_NAME/.mozilla/firefox/*/cache2/*
+home/$USER_NAME/.mozilla/firefox/*/thumbnails/*
+home/$USER_NAME/.config/MX-Linux/xdg_check
+EOF
+
+# --- Génération fichier mx-snapshot.conf personnalisé ---
+cat > "$CONF_FILE" <<EOF
+# Répertoire temporaire de travail
+work_dir="/home/snapshot/work"
+
+# Répertoire de sortie de l’ISO
+snapshot_dir="/home/snapshot/snapshots"
+
+# Nom de l’ISO finale
+snapshot_name="mxclone-$USER_NAME"
+
+# Nettoyage : on conserve un maximum
+save_changes="true"
+clean_apts="false"
+clean_logs="false"
+clean_tmp="false"
+
+# Comptes utilisateurs
+exclude_home="false"
+persist_home="true"
+persist_root="true"
+username="$USER_NAME"
+
+# Système Live
+hostname="mxclone"
+locale="fr_FR.UTF-8"
+keyboard="fr"
+
+# Compression rapide
+compression="lz4"
+
+# Liste d'exclusion personnalisée
+exclude_list="$EXCLUDE_FILE"
+EOF
+
+echo "✅ Fichier exclude : $EXCLUDE_FILE"
+echo "✅ Fichier config : $CONF_FILE"
+echo "📦 Tu peux maintenant lancer :"
+echo "    sudo mx-snapshot $CONF_FILE"
