@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Clonezilla
+Comment=Recuperation de fichiers dans un disque dur
+Icon=Recovery1
+Exec=sudo photorec
+Categories=Utility
+StartupNotify=false
+Terminal=true
+Name[fr_FR]=photorec
+Path=

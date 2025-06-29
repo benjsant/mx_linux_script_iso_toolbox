@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Check if Script is Run as user 
+if [[ $EUID -ne 0 ]]; then
+  sudo apt update -y && sudo apt upgrade -y  
+  
+  tar -xvzf config/config_mx_linux.tar.gz
+  
+  rm -R ~/.config
+  mv -f .config/ ~
+
+  mkdir ~/mxsnapshot
+
+  sudo ./script/install_begin
+
+    echo -ne "
+-------------------------------------------------------------------------
+                    Wait until the reboot ...
+-------------------------------------------------------------------------
+"&& sleep 20
+
+  reboot
+  else
+  echo "You must be a non-root user to run this script, please run ./install" 2>&1
+
+  exit 1
+fi
+

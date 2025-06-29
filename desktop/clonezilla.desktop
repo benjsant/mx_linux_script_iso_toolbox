@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Clonezilla
+Comment=Sauvegarde de disque ou de partitions 
+Icon=Clonezilla
+Exec=sudo clonezilla
+Categories=Utility
+StartupNotify=false
+Terminal=true
+Path=

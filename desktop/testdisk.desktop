@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Testdisk
+Comment=
+Icon=Recovery2
+Exec=sudo testdisk
+Categories=Utility
+StartupNotify=false
+Terminal=true
+Name[fr_FR]=testdisk
+Path=
