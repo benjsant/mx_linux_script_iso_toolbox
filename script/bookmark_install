@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Nom d'utilisateur courant (via sudo si script root)
+util=${SUDO_USER:-$USER}
+bookmark_file="/home/$util/.config/gtk-3.0/bookmarks"
+
+# Créer le dossier s'il n'existe pas
+mkdir -p "/home/$util/.config/gtk-3.0"
+
+# Liste personnalisée des favoris
+bookmarks=(
+  "file:///home/$util/Documents"
+  "file:///home/$util/Musique"
+  "file:///home/$util/Images"
+  "file:///home/$util/Vidéos"
+  "file:///home/$util/Téléchargements"
+)
+
+# Écriture des favoris dans le fichier
+> "$bookmark_file"  # Vide le fichier s’il existe
+for line in "${bookmarks[@]}"; do
+  echo "$line" >> "$bookmark_file"
+done
+
+# Changer le propriétaire au bon utilisateur
+chown "$util:$util" "$bookmark_file"

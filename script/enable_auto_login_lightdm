@@ -1,0 +1,19 @@
+#!/bin/bash
+
+FILE="/etc/lightdm/lightdm.conf"
+BACKUP="/etc/lightdm/lightdm.conf.bak"
+util=${SUDO_USER:-$USER}
+
+# Sauvegarde
+sudo cp "$FILE" "$BACKUP"
+
+# Supprime toute ancienne ligne autologin dans la section [SeatDefaults]
+sudo sed -i '/^autologin-user=/d' "$FILE"
+sudo sed -i '/^autologin-user-timeout=/d' "$FILE"
+sudo sed -i '/^autologin-session=/d' "$FILE"
+
+# Ajoute les lignes après la section [SeatDefaults]
+sudo sed -i "/^\[SeatDefaults\]/a autologin-user=$util\nautologin-user-timeout=0\nautologin-session=lightdm-autologin" "$FILE"
+
+echo "✅ Autologin activé pour l’utilisateur : $util"
+echo "🔒 Fichier original sauvegardé dans : $BACKUP"

@@ -115,6 +115,10 @@ home/$USER_NAME/.cache/thumbnails/*
 home/$USER_NAME/.mozilla/firefox/*/cache2/*
 home/$USER_NAME/.mozilla/firefox/*/thumbnails/*
 home/$USER_NAME/.config/MX-Linux/xdg_check
+home/$USER_NAME/mxsnapshot
+home/$USER_NAME/Bureau/mx_linux_script_iso_toolbox
+home/$USER_NAME/mx_linux_script_iso_toolbox
+
 EOF
 
 # --- Génération fichier mx-snapshot.conf personnalisé ---

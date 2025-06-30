@@ -13,6 +13,8 @@ if [[ $EUID -ne 0 ]]; then
 
   sudo ./script/install_begin
 
+  #sudo mx-snapshot -c  /home/$util/mxsnapshot/mx-snapshot.conf
+
     echo -ne "
 -------------------------------------------------------------------------
                     Wait until the reboot ...
