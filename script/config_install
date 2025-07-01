@@ -13,6 +13,11 @@ chown root:root config/environment
 chmod 644 config/environment
 mv config/environment /etc/environment
 
+#config autologin 
+sudo crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user "$util"
+sudo crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user-timeout 0
+sudo crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-session xfce
+
 #modif /etc/sudoers
 rm /etc/sudoers
 
