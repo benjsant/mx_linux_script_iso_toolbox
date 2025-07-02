@@ -1,6 +1,6 @@
 #!/bin/bash
 
-util=$(getent passwd "1000"|cut -d: -f1)
+util=${SUDO_USER:-$USER}
 
 FILE="/etc/lightdm/lightdm.conf"
 

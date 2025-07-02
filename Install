@@ -13,7 +13,11 @@ if [[ $EUID -ne 0 ]]; then
 
   sudo ./script/install_begin
 
-  #sudo mx-snapshot -c  /home/$util/mxsnapshot/mx-snapshot.conf
+  ./script/bookmark_install 
+
+  ./script/generate_exclude 
+
+  sudo mx-snapshot -c  /home/$util/mxsnapshot/mx-snapshot.conf
 
     echo -ne "
 -------------------------------------------------------------------------
