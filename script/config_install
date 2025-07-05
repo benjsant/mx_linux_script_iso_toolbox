@@ -2,8 +2,6 @@
 
 util=${SUDO_USER:-$USER}
 
-FILE="/etc/lightdm/lightdm.conf"
-
 systemctl mask suspend.target hibernate.target
 
 #modif /etc/environment 
@@ -31,6 +29,11 @@ chmod 644 config/disable-passwords.rules
 mv config/disable-passwords.rules /etc/polkit-1/rules.d/disable-passwords.rules
 
 mkdir -p /home/snapshot/{work,snapshots}
+
+# Config mx_linux 
+rm /etc/mx-snapshot-exclude.list
+chmod 644 config/mx-snapshot-exclude.list
+mv config/mx-snapshot-exclude.list /etc/mx-snapshot-exclude.list
 
 #Cleaning packages 
 apt autoclean
