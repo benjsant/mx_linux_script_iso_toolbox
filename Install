@@ -9,18 +9,15 @@ if [[ $EUID -ne 0 ]]; then
   rm -R ~/.config
   mv -f .config/ ~
 
-  mkdir ~/mxsnapshot
-
   sudo ./script/install_begin
 
   ./script/bookmark_install 
 
-  ./script/generate_exclude 
+  rm -i /home/$util/.vbox*
 
-  rm ~/.vbox*
+  sudo mx-snapshot -c  
 
-  sudo mx-snapshot -c  /home/$util/mxsnapshot/mx-snapshot.conf
-
+  #sudo mx-snapshot -c  -z xz
   echo -ne "
 -------------------------------------------------------------------------
                     Wait until the reboot ...
