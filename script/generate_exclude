@@ -5,8 +5,8 @@ USER_NAME="${1:-$USER}"
 
 # Répertoires de travail
 BASE_DIR="/home/$USER_NAME/mxsnapshot"
-EXCLUDE_FILE="$BASE_DIR/exclude-$USER_NAME.list"
-CONF_FILE="$BASE_DIR/mx-snapshot-$USER_NAME.conf"
+EXCLUDE_FILE="$BASE_DIR/exclude.list"
+CONF_FILE="$BASE_DIR/mx-snapshot.conf"
 
 mkdir -p "$BASE_DIR"
 
