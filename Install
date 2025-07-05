@@ -6,18 +6,17 @@ if [[ $EUID -ne 0 ]]; then
 
   tar -xvzf config/config_mx_linux.tar.gz
   
-  rm -R ~/.config
-  mv -f .config/ ~
+  # Synchronise le contenu en toute sécurité
+  rsync -a --delete .config/ "$HOME/.config/"
 
   sudo ./script/install_begin
 
   ./script/bookmark_install 
 
-  rm -i /home/$util/.vbox*
+  rm /home/$util/.vbox*
 
-  sudo mx-snapshot -c  
-
-  #sudo mx-snapshot -c  -z xz
+  sudo mx-snapshot -c -z xz
+  
   echo -ne "
 -------------------------------------------------------------------------
                     Wait until the reboot ...

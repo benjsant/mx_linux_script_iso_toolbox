@@ -4,34 +4,23 @@ util=${SUDO_USER:-$USER}
 
 systemctl mask suspend.target hibernate.target
 
-#modif /etc/environment 
-rm /etc/environment 
-
-chown root:root config/environment
-chmod 644 config/environment
-mv config/environment /etc/environment
+# Copier /etc/environment
+rsync -a --chown=root:root config/environment /etc/environment
 
 #config autologin 
 crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user "$util"
 crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user-timeout 0
 crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-session xfce
 
-#modif /etc/sudoers
-rm /etc/sudoers
+# Sudoers (chmod spécial)
+rsync -a --chown=root:root config/sudoers /etc/sudoers
+chmod 440 /etc/sudoers
 
-chown root:root config/sudoers
-chmod 440 config/sudoers
-mv config/sudoers /etc/sudoers
+# Polkit rules
+rsync -a --chown=root:root config/disable-passwords.rules /etc/polkit-1/rules.d/
 
-#Add policyKit (polkit) rules, allowing to use gtk root application without password
-chown root:root config/disable-passwords.rules
-chmod 644 config/disable-passwords.rules
-mv config/disable-passwords.rules /etc/polkit-1/rules.d/disable-passwords.rules
-
-# Config mx_linux 
-rm /etc/mx-snapshot-exclude.list
-chmod 644 config/mx-snapshot-exclude.list
-mv config/mx-snapshot-exclude.list /etc/mx-snapshot-exclude.list
+# mx-snapshot exclude
+rsync -a --chown=root:root config/mx-snapshot-exclude.list /etc/
 
 #Cleaning packages 
 apt autoclean

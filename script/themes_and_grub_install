@@ -1,8 +1,8 @@
 #!/bin/bash
 
-git clone https://github.com/vinceliuice/Qogir-theme.git
-git clone https://github.com/vinceliuice/Tela-icon-theme.git
-git clone https://github.com/milkmadedev/oreo-cursors-compiled
+git  --depth=1 clone https://github.com/vinceliuice/Qogir-theme.git
+git  --depth=1 clone https://github.com/vinceliuice/Tela-icon-theme.git
+git  --depth=1 clone https://github.com/milkmadedev/oreo-cursors-compiled
 
 mkdir /usr/share/themes
 mkdir /usr/share/icons 
@@ -15,10 +15,6 @@ mv oreo-cursors-compiled/oreo_spark_violet_cursors/ /usr/share/icons/
 ./Tela-icon-theme/install.sh red -d /usr/share/icons/
 
 # Ajout icons et .desktop
-rm /usr/share/applications/lshw-gtk.desktop
-rm /usr/share/applications/gparted.desktop
-mv desktop/* /usr/share/applications
-mv icons/* /usr/share/icons 
-
-# config mx-excludes 
-
+rm -f /usr/share/applications/{lshw-gtk.desktop,gparted.desktop}
+rsync -a desktop/ /usr/share/applications/
+rsync -a icons/ /usr/share/icons/

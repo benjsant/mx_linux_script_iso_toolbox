@@ -2,19 +2,9 @@
 
 apt update -y && apt upgrade -y 
 
-while read line 
-  do
-  apt_pack+=" "$line
-  done< txt/apt.txt
+apt install -y $(grep -vE '^#|^$' txt/apt.txt | xargs)
 
-apt install ${apt_pack} -y
-
-while read line 
-  do
-  remove_pack+=" "$line
-  done< txt/remove.txt
-
-apt remove ${remove_pack} -y
+apt remove -y $(grep -vE '^#|^$' txt/remove.txt | xargs)
 
 apt update -y
 
