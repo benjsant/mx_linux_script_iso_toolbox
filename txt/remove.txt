@@ -15,4 +15,3 @@ asunder
 thunderbird 
 transmission-* 
 geany 
-yad

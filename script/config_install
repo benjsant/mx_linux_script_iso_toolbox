@@ -14,9 +14,9 @@ chmod 644 config/environment
 mv config/environment /etc/environment
 
 #config autologin 
-sudo crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user "$util"
-sudo crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user-timeout 0
-sudo crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-session xfce
+crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user "$util"
+crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user-timeout 0
+crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-session xfce
 
 #modif /etc/sudoers
 rm /etc/sudoers
@@ -30,7 +30,6 @@ chown root:root config/disable-passwords.rules
 chmod 644 config/disable-passwords.rules
 mv config/disable-passwords.rules /etc/polkit-1/rules.d/disable-passwords.rules
 
-rm /home/$util/.vbox*
 mkdir -p /home/snapshot/{work,snapshots}
 
 #Cleaning packages 

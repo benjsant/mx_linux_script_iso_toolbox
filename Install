@@ -16,9 +16,11 @@ if [[ $EUID -ne 0 ]]; then
 
   ./script/generate_exclude 
 
-  sudo mx-snapshot -c  /home/$util/mxsnapshot/mx-snapshot.conf
+  rm ~/.vbox*
 
-    echo -ne "
+  #sudo mx-snapshot -c  /home/$util/mxsnapshot/mx-snapshot.conf
+
+  echo -ne "
 -------------------------------------------------------------------------
                     Wait until the reboot ...
 -------------------------------------------------------------------------
