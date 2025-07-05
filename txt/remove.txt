@@ -15,3 +15,5 @@ asunder
 thunderbird 
 transmission-* 
 geany 
+featherpad
+
