@@ -28,8 +28,6 @@ chown root:root config/disable-passwords.rules
 chmod 644 config/disable-passwords.rules
 mv config/disable-passwords.rules /etc/polkit-1/rules.d/disable-passwords.rules
 
-mkdir -p /home/snapshot/{work,snapshots}
-
 # Config mx_linux 
 rm /etc/mx-snapshot-exclude.list
 chmod 644 config/mx-snapshot-exclude.list
