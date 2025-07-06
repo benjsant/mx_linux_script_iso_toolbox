@@ -13,7 +13,7 @@ if [[ $EUID -ne 0 ]]; then
   apt update -y && apt upgrade -y 
 
   ./script/apt_install
-  ./script/themes_and_grub_install
+  ./script/themes_and_icons_install
   ./script/config_install
 fi
 

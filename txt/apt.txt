@@ -1,26 +1,65 @@
+# === Archives et compression ===
 thunar-archive-plugin
 p7zip
 p7zip-full
+
+# === Capture et édition d'écran ===
 flameshot
+
+# === Partitionnement, disques et stockage ===
 gparted
-git
-ncdu
-bleachbit
-numlockx
-lshw
-lshw-gtk
-clamtk
 gnome-disk-utility
 gsmartcontrol
-hardinfo
-clonezilla
-filezilla
-mousepad
-testdisk
-eom
-dkms
 baobab
+
+# === Système et hardware info ===
+lshw
+lshw-gtk
+hardinfo
 neofetch
-curl
+inxi
+smartmontools
+
+# === Récupération de données et sauvegarde ===
+clonezilla
+testdisk
+photorec
+rsync
+grsync
+partclone
+fsarchiver
+extundelete
+chntpw
+wipe
+
+# === Réseau et analyse ===
 etherape
+nmap
+iperf3
+traceroute
+net-tools
+curl
+
+# === Nettoyage et maintenance ===
+bleachbit
+ncdu
+htop
+iotop
+dkms
+
+# === Interfaces & gestionnaire de fichiers ===
+numlockx
+mousepad
+xfce4-terminal
+gvfs-backends
+xdg-utils
+
+# === Antivirus ===
+clamtk
+
+# === Transferts et outils internet ===
+filezilla
+
+# === Développement et outils en ligne de commande ===
+git
 crudini

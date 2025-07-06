@@ -1,13 +1,16 @@
 #!/bin/bash
+set -e
 
-apt update -y && apt upgrade -y 
+echo "📦 Mise à jour des dépôts..."
+apt update -y && apt upgrade -y
 
-apt install -y $(grep -vE '^#|^$' txt/apt.txt | xargs)
+echo "🟢 Installation des paquets utiles..."
+grep -vE '^#|^$' txt/apt.txt | xargs -r apt install -y
 
-apt remove -y $(grep -vE '^#|^$' txt/remove.txt | xargs)
+echo "🔴 Suppression des paquets inutiles..."
+grep -vE '^#|^$' txt/remove.txt | xargs -r apt remove -y
 
+echo "🧹 Nettoyage..."
 apt update -y
-
 apt autoremove -y
-
-apt install -f 
+apt install -f
