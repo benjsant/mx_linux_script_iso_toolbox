@@ -1,5 +1,6 @@
 # === Gadgets visuels / surveillance système inutile ===
 conky-all
+conky-*
 
 # === Logiciels de numérisation / sécurité GNOME ===
 simple-scan
