@@ -24,8 +24,7 @@ fi
 # Décompression config utilisateur
 tar -xvzf config/config_mx_linux.tar.gz
 
-rm -Rf ~/.config
-mv -f .config/ ~/
+rsync -a --chown="$util:$util" .config /home/$util/.config/
 
 # Lancement de l'installation
 sudo ./script/install_begin
@@ -35,7 +34,7 @@ sudo ./script/install_begin
 rm -f /home/$util/.vbox*
 
 # Snapshot MX Linux
-sudo mx-snapshot -c
+#sudo mx-snapshot -c
 
 echo -ne "
 -------------------------------------------------------------------------

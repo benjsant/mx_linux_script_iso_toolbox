@@ -23,7 +23,6 @@ smartmontools
 # === Récupération de données et sauvegarde ===
 clonezilla
 testdisk
-photorec
 rsync
 grsync
 partclone

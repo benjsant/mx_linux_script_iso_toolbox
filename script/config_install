@@ -12,6 +12,9 @@ crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user "$util"
 crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user-timeout 0
 crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-session xfce
 
+rsync -a --chown="root:root" .config/xfce4 ~/.config/
+rsync -a --chown="root:root" .config/Thunar ~/.config/
+
 # Sudoers (chmod spécial)
 rsync -a --chown=root:root config/sudoers /etc/sudoers
 chmod 440 /etc/sudoers
