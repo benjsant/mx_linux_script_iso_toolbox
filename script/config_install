@@ -1,40 +1,29 @@
 #!/bin/bash
 
-util=$(getent passwd "1000"|cut -d: -f1)
-
-FILE="/etc/lightdm/lightdm.conf"
+util=${SUDO_USER:-$USER}
 
 systemctl mask suspend.target hibernate.target
 
-#modif /etc/environment 
-rm /etc/environment 
+# Copier /etc/environment
+rsync -a --chown=root:root config/environment /etc/environment
 
-chown root:root config/environment
-chmod 644 config/environment
-mv config/environment /etc/environment
+#config autologin 
+crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user "$util"
+crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-user-timeout 0
+crudini --set /etc/lightdm/lightdm.conf SeatDefaults autologin-session xfce
 
-#modif /etc/sudoers
-rm /etc/sudoers
+rsync -a --chown="root:root" .config/xfce4 ~/.config/
+rsync -a --chown="root:root" .config/Thunar ~/.config/
 
-chown root:root config/sudoers
-chmod 440 config/sudoers
-mv config/sudoers /etc/sudoers
+# Sudoers (chmod spécial)
+rsync -a --chown=root:root config/sudoers /etc/sudoers
+chmod 440 /etc/sudoers
 
-# Lightdm Autologin 
+# Polkit rules
+rsync -a --chown=root:root config/disable-passwords.rules /etc/polkit-1/rules.d/
 
-sed -i '/^autologin-user=/d' "$FILE"
-sed -i '/^autologin-user-timeout=/d' "$FILE"
-sed -i '/^autologin-session=/d' "$FILE"
-
-sed -i "/^\[Seat:\*\]/a autologin-user=$util\nautologin-user-timeout=0\nautologin-session=lightdm-autologin" "$FILE"
-
-#Add policyKit (polkit) rules, allowing to use gtk root application without password
-chown root:root config/disable-passwords.rules
-chmod 644 config/disable-passwords.rules
-mv config/disable-passwords.rules /etc/polkit-1/rules.d/disable-passwords.rules
-
-
-mkdir -p /home/snapshot/{work,snapshots}
+# mx-snapshot exclude
+rsync -a --chown=root:root config/mx-snapshot-exclude.list /etc/
 
 #Cleaning packages 
 apt autoclean

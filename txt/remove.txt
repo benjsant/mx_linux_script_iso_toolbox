@@ -1,18 +1,34 @@
+# === Gadgets visuels / surveillance système inutile ===
 conky-all
-seahorse
+conky-*
+
+# === Logiciels de numérisation / sécurité GNOME ===
 simple-scan
+seahorse
+
+# === Multimédia non essentiel ===
 vlc*
 strawberry
 xfburn
+asunder
+
+# === Bureautique ===
 libreoffice-*
+
+# === Lecture et gestion de documents ===
 foliate
 pdfarranger
+
+# === Jeux ===
 lbreakout2
 swell-foop
 gnome-mahjongg
 peg-e
-asunder 
-thunderbird 
-transmission-* 
-geany 
-yad
+
+# === Logiciels internet non indispensables ===
+thunderbird
+transmission-*
+
+# === Éditeurs de texte alternatifs ===
+geany
+featherpad

@@ -1,28 +1,45 @@
 #!/bin/bash
 
-# Check if Script is Run as user 
-if [[ $EUID -ne 0 ]]; then
-  sudo apt update -y && sudo apt upgrade -y  
-  
-  tar -xvzf config/config_mx_linux.tar.gz
-  
-  rm -R ~/.config
-  mv -f .config/ ~
+util=${SUDO_USER:-$USER}
 
-  mkdir ~/mxsnapshot
-
-  sudo ./script/install_begin
-
-    echo -ne "
--------------------------------------------------------------------------
-                    Wait until the reboot ...
--------------------------------------------------------------------------
-"&& sleep 20
-
-  reboot
-  else
-  echo "You must be a non-root user to run this script, please run ./install" 2>&1
-
+# Vérifier que le script est lancé en tant qu'utilisateur non root
+if [[ $EUID -eq 0 ]]; then
+  echo "❌ Vous devez exécuter ce script en tant qu'utilisateur normal (non root)." >&2
   exit 1
 fi
 
+# Vérification que c’est MX Linux
+if [[ ! -f /etc/mx-version ]]; then
+  echo "❌ Ce script est prévu uniquement pour MX Linux." >&2
+  exit 1
+fi
+
+# Vérification environnement de bureau (XFCE)
+desktop_env=$(echo "$XDG_CURRENT_DESKTOP" | tr '[:upper:]' '[:lower:]')
+if [[ "$desktop_env" != *"xfce"* ]]; then
+  echo "❌ Ce script nécessite l’environnement de bureau XFCE." >&2
+  exit 1
+fi
+
+# Décompression config utilisateur
+tar -xvzf config/config_mx_linux.tar.gz
+
+rsync -a --chown="$util:$util" .config/ /home/$util/.config/
+
+# Lancement de l'installation
+sudo ./script/install_begin
+./script/bookmark_install
+
+# Nettoyage VBox si présent
+rm -f /home/$util/.vbox*
+
+# Snapshot MX Linux
+sudo mx-snapshot -c -z xz
+
+echo -ne "
+-------------------------------------------------------------------------
+                    Attendez la fin de la génération ISO...
+-------------------------------------------------------------------------
+" && sleep 10
+
+sudo reboot

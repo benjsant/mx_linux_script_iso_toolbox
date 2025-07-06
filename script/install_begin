@@ -1,22 +1,20 @@
 #!/bin/bash
 
-util=$(getent passwd "1000"|cut -d: -f1)
+util=${SUDO_USER:-$USER}
+#util=$(getent passwd "1000"|cut -d: -f1)
 
 # Check if Script is Run as Root
 if [[ $EUID -ne 0 ]]; then
-  echo "You must be a root user to run this script, please run sudo ./install.sh" 2>&1
+  echo "You must be a root user to run this script, please run sudo ./install" 2>&1
   
   exit 1
   else
-
+  echo "➡️ Mise à jour APT..."
   apt update -y && apt upgrade -y 
 
   ./script/apt_install
-  ./script/themes_and_grub_install
+  ./script/themes_and_icons_install
   ./script/config_install
-
-  mx-snapshot -c  /home/$util/mxsnapshot/mx-snapshot.conf
-
 fi
 
 
