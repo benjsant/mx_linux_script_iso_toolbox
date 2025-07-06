@@ -34,7 +34,6 @@ wipe
 # === Réseau et analyse ===
 etherape
 nmap
-iperf3
 traceroute
 net-tools
 curl

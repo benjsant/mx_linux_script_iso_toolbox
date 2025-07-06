@@ -8,7 +8,7 @@ mkdir /usr/share/themes
 mkdir /usr/share/icons 
 
 # Installation of oreo spark cursor 
-rsync -a --chown=root:root oreo-cursors-compiled/oreo_spark_violet_cursors/ /usr/share/icons/ 
+rsync -a --chown=root:root oreo-cursors-compiled/oreo_spark_violet_cursors /usr/share/icons/ 
 
 ./Qogir-theme/install.sh -c dark -d /usr/share/themes/
 ./Tela-icon-theme/install.sh red -d /usr/share/icons/

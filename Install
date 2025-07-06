@@ -34,7 +34,7 @@ sudo ./script/install_begin
 rm -f /home/$util/.vbox*
 
 # Snapshot MX Linux
-#sudo mx-snapshot -c
+sudo mx-snapshot -c -z xz
 
 echo -ne "
 -------------------------------------------------------------------------
