@@ -24,7 +24,7 @@ fi
 # Décompression config utilisateur
 tar -xvzf config/config_mx_linux.tar.gz
 
-rsync -a --chown="$util:$util" .config /home/$util/.config/
+rsync -a --chown="$util:$util" .config/ /home/$util/.config/
 
 # Lancement de l'installation
 sudo ./script/install_begin
